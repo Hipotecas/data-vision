@@ -1,4 +1,5 @@
-import * as echarts from 'echarts'
+import { graphic } from 'echarts/core'
+
 export const getLine = (title: string | undefined, xAxisData: any[], seriesData: any[]) => {
   return {
     title: {
@@ -83,7 +84,7 @@ export const getLine = (title: string | undefined, xAxisData: any[], seriesData:
           width: '0',
         },
         areaStyle: {
-          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          color: new graphic.LinearGradient(0, 0, 0, 1, [
             {
               offset: 0,
               color: 'rgba(64, 98, 235,0.8)',
