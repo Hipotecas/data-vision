@@ -1,6 +1,6 @@
 <template>
   <div class="h-max  bg-black flex text-light-500 flex-col">
-    <div class="text-3xl text-center grid  items-center h-1/6 relative">
+    <div class="text-3xl text-center grid  items-center h-30 relative">
       <span>IOT Real-Time Dashboard</span>
       <div class="absolute right-4">
         <DropdownMenu />

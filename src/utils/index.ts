@@ -74,10 +74,8 @@ export const getLine = (title: string | undefined, xAxisData: any[], seriesData:
         stack: 'Kami总量',
         dataTypeString: 1,
         label: {
-          normal: {
-            show: false,
-            position: 'top',
-          },
+          show: false,
+          position: 'top',
         },
         // showSymbol:false,
         lineStyle: {
