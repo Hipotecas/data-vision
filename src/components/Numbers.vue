@@ -9,7 +9,7 @@ watch(() => props.num, (val) => {
 
 <template>
   <ul class="flex bg-hex-0d1d3d p-4 w-full">
-    <li v-for="(_, index) in max" :key="index" class="mr-3 w-10 h-14 relative">
+    <li v-for="(_, index) in max" :key="_" class="mr-3 w-10 h-14 relative">
       <Transition :name="index % 2 ? 'slide-fade' : 'slide-fade1'">
         <span :key="list[index]" class="absolute block text-center w-10 h-14 leading-14 " :class="list[index] !== '?' ? 'bg-hex-61adee' : 'bg-hex-6378a3'">
           {{ list[index] !== '?' ? list[index] : '' }}

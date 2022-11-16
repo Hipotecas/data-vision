@@ -1,15 +1,24 @@
-<script setup lang="ts">
-import { fetchIot } from '~/api/iot';
-import type { Types } from '~/api/types';
-import { getLine } from '~/utils';
-import { defaultLine } from '~/utils/line';
-let data = $ref<Types>(defaultLine)
+<script setup>
+import { fetchYi } from '~/api/iot';
 
+import { getLine } from '~/utils';
+import { defaultYiLine } from '~/utils/line';
+let data = $ref(defaultYiLine)
+const { resume, pause } = useIntervalFn(load, 10000)
 onMounted(() => {
-  fetchIot().then((res) => {
+  fetchYi().then((res) => {
     data = res
   })
+  resume()
 })
+onUnmounted(() => {
+  pause()
+})
+function load() {
+  fetchYi().then((res) => {
+    data = res
+  })
+}
 
 const line1 = computed(() => getLine('激活量', data.factoryDate, data.factoryEquipmentNum))
 const line2 = computed(() => getLine('激活量', data.factoryDate_Week, data.factoryEquipmentNum_Week))
@@ -18,8 +27,8 @@ const line3 = computed(() => getLine('激活量', data.factoryDate_Month, data.f
 
 <template>
   <div class="h-full overflow-hidden bg-black flex text-light-500 flex-col">
-    <div class="text-3xl text-center grid  items-center h-1/6 relative">
-      <span>IOT Real-Time Dashboard</span>
+    <div class="text-3xl text-center grid  items-center h-1/6">
+      <span>YiHome Real-Time Dashboard</span>
       <div class="absolute right-4">
         <DropdownMenu />
       </div>
@@ -27,16 +36,15 @@ const line3 = computed(() => getLine('激活量', data.factoryDate_Month, data.f
     <section class="flex h-1/2 mr-4 mb-4s">
       <div class="flex flex-col px-4 w-80">
         <OnlineAmout title="全球设备在线数量(Top 20)" :list="data.countryTop" />
-        <div>
-          <span class="text-base h-10 leading-10">激活量实时分布图</span>
-          <OnlineMap class="flex-1" :active-city="data.activeCity" :active-country="data.activeCountry" />
-        </div>
       </div>
       <div class="flex flex-col mx-4 flex-1">
         <Daily />
       </div>
       <div class="flex flex-col mx-4 flex-1">
-        <Factory :factory-data="data.factoryData" />
+        <div>
+          <span class="text-base h-10 leading-10">激活量实时分布图</span>
+          <OnlineMap class="flex-1" height="300px" :active-city="data.activeCity" :active-country="data.activeCountry" />
+        </div>
       </div>
       <div class="flex-grow flex-1">
         <div>
@@ -45,7 +53,7 @@ const line3 = computed(() => getLine('激活量', data.factoryDate_Month, data.f
           </div>
           <el-popover placement="left" trigger="click">
             <template #reference>
-              <Numbers :key="1" :num="data.allActiveCam.toString()" :max="8" />
+              <Numbers :num="data.allActiveCam.toString()" :max="8" />
             </template>
             <div class="w-30">
               <div v-for="(item, index) in data.allActiveCamRegion" :key="index" class="flex items-center justify-between">
@@ -59,37 +67,17 @@ const line3 = computed(() => getLine('激活量', data.factoryDate_Month, data.f
           <div class="h-10 leading-10">
             设备当前在线数(台)
           </div>
-          <el-popover placement="left" trigger="click">
-            <template #reference>
-              <Numbers :key="2" :num="data.activeCam.toString()" :max="8" />
-            </template>
-            <div class="w-30">
-              <div v-for="(item, index) in data.activeCamRegion" :key="index" class="flex items-center justify-between">
-                <span>{{ item.onlineRegion }}</span>
-                <span>{{ item.onlineNum }}</span>
-              </div>
-            </div>
-          </el-popover>
+          <Numbers :num="data.activeCam.toString()" :max="8" />
         </div>
         <div>
           <div class="h-10 leading-10">
             今日激活量(台)
           </div>
-          <el-popover placement="left" trigger="click">
-            <template #reference>
-              <Numbers :key="data.newCam" :num="data.newCam.toString()" :max="8" />
-            </template>
-            <div class="w-30">
-              <div v-for="(item, index) in data.newCamRegion" :key="index" class="flex items-center justify-between">
-                <span>{{ item.todayRegion }}</span>
-                <span>{{ item.todayNum }}</span>
-              </div>
-            </div>
-          </el-popover>
+          <Numbers :num="data.newCam.toString()" :max="8" />
         </div>
       </div>
     </section>
-    <div class="h-1/3 grid grid-cols-[1fr,300px,1fr,1fr]">
+    <div class="hidden h-1/3 grid grid-cols-[1fr,300px,1fr,1fr]">
       <div class="  items-center mr-4">
         <div class="p-4">
           <div>近一个月工厂生产设备数(台/号)</div>

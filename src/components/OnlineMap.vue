@@ -1,9 +1,9 @@
 <script>
 import {
-BarChart, EffectScatterChart, LineChart, LinesChart, MapChart, PieChart, RadarChart,
-ScatterChart
+  BarChart, EffectScatterChart, LineChart, LinesChart, MapChart, PieChart, RadarChart,
+  ScatterChart,
 } from 'echarts/charts'
-import { DatasetComponent, DataZoomComponent, GeoComponent, GridComponent, LegendComponent, PolarComponent, TitleComponent, ToolboxComponent, TooltipComponent, VisualMapComponent } from 'echarts/components'
+import { DataZoomComponent, DatasetComponent, GeoComponent, GridComponent, LegendComponent, PolarComponent, TitleComponent, ToolboxComponent, TooltipComponent, VisualMapComponent } from 'echarts/components'
 import { registerMap, use } from 'echarts/core'
 import { CanvasRenderer, SVGRenderer } from 'echarts/renderers'
 // import "echarts-liquidfill";
@@ -51,7 +51,7 @@ export default {
   components: {
     VChart,
   },
-  props: ['activeCountry', 'activeCity'],
+  props: ['activeCountry', 'activeCity', 'height'],
   data() {
     const options = {}
     return {
@@ -161,9 +161,9 @@ export default {
       ref="map"
       :chart-option="map"
       autoresize
-      height="160px"
+      :height="height || '160px'"
     />
-    <div class="absolute left-0 bottom-0">
+    <div class="absolute left-2 bottom-2">
       <div class="text-xs">
         国家和地区：{{ activeCountry }}
       </div>

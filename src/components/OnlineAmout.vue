@@ -17,6 +17,8 @@ defineProps<{ title: string; list: { country: string; onlineDevice: number }[] }
 
 <style lang="css">
 .bg {
-  background-image: linear-gradient(rgba(0, 108, 241, 0.45) 0%, rgba(74, 130, 246, 0.1) 100%);
+  background-image: linear-gradient(180deg, rgba(0, 108, 241, 0.45) 0%, rgba(74, 130, 246, 0.1) 100%);
+  background-image: url('../assets/yuncunrec.png');
+  background-size: 100% 100%;
 }
 </style>
