@@ -9,5 +9,5 @@ const line = computed(() => getLineOption(props.legend, props.axis, props.series
   <div class="text-xl">
     {{ title }}
   </div>
-  <v-chart :option="line" autoresize style="height: 450px" />
+  <e-charts :option="line" height="450px" />
 </template>

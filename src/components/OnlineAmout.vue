@@ -1,5 +1,5 @@
 <script setup lang="ts">
-defineProps<{ title: string; list: { country: string; onlineDevice: number }[] }>()
+defineProps<{ title: string; list: Record<string, number> }>()
 // 23 35 52
 </script>
 
@@ -9,8 +9,8 @@ defineProps<{ title: string; list: { country: string; onlineDevice: number }[] }
   </p>
   <div class="bg overflow-auto p-4 h-max-100">
     <p v-for="(item, index) in list" :key="index" class="flex items-center px-4">
-      <span class="w-1/2 text-left">{{ item.country }}:</span>
-      <span class="w-1/2 text-left">{{ item.onlineDevice }}</span>
+      <span class="w-1/2 text-left">{{ index }}:</span>
+      <span class="w-1/2 text-left">{{ item }}</span>
     </p>
   </div>
 </template>

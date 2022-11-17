@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { dayjs } from 'element-plus';
+import dayjs from 'dayjs';
 import { getLineOption } from '~/utils/line';
+
 defineProps<{
   title?: string
   type?: string
@@ -18,13 +19,13 @@ onMounted(() => {})
 </script>
 
 <template>
-  <div>
+  <div class="text-center text-base">
     <span>{{ title }}</span>
   </div>
   <div class="px-5">
     <el-date-picker v-model="state.current" style="width: 200px;" />
     <el-date-picker v-model="state.target" style="width: 200px; margin-left: 10px;" />
   </div>
-  <v-chart :option="line" autoresize style="height:450px" />
+  <e-charts :option="line" height="450px" />
 </template>
 

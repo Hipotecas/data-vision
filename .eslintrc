@@ -1,6 +1,7 @@
 {
   "extends": "@antfu",
   "rules": {
-    "@typescript-eslint/semi": 0
+    "@typescript-eslint/semi": 0,
+    "import/order": 0
   }
 }

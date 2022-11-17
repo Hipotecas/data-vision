@@ -124,4 +124,21 @@ export default defineConfig({
     // TODO: workaround until they support native ESM
     noExternal: ['workbox-window', /vue-i18n/],
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          echarts: ['echarts'],
+        },
+      },
+    },
+  },
+  server: {
+    proxy: {
+      '/bi': {
+        target: 'http://192.168.31.179:8080',
+        changeOrigin: true,
+      },
+    },
+  },
 })

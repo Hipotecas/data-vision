@@ -1,6 +1,7 @@
 import iot from './iot.json'
 
 export default {
+  backgroundColor: '#000',
   textStyle: {
     fontFamily: 'Inter, "Helvetica Neue", Arial, sans-serif',
   },

@@ -1,17 +1,11 @@
 <script setup lang="ts">
-import { registerMap } from 'echarts';
-import './china.json';
-import map from './map';
-import worldMap from './world.json';
 defineProps<{ height?: number | string; activeCountry: number ; activeCity: number }>()
-
-registerMap('world', worldMap as any)
 </script>
 
 <template>
-  <figure class="bg relative">
-    <v-chart autoresize :option="map" :style="{ height: height || '160px' }" />
-    <div class="absolute left-2 bottom-2">
+  <figure class="relative">
+    <div class="map-bg" :style="{ height: height || '160px' }" />
+    <div class="absolute left-4 bottom-4">
       <div class="text-xs">
         国家和地区：{{ activeCountry }}
       </div>
@@ -23,6 +17,8 @@ registerMap('world', worldMap as any)
 </template>
 
 <style>
-
+  .map-bg {
+    background-image: url('../assets/echarts.png');
+    background-size: 100% 100%;
+  }
 </style>
-

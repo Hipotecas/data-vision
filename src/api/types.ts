@@ -1,71 +1,74 @@
 export interface Types {
-  countryTop: CountryTop[]
-  factoryDate_Month: string[]
-  cloudCamRegion: CloudCamRegion[]
-  eu_newCam30Iot: number[]
-  cn_newCam30Iot: number[]
-  factoryEquipmentNum: number[]
-  activeCam: number
-  newCamRegion: NewCamRegion[]
-  activeCountry: number
-  factoryData: FactoryDataList[]
-  factoryDate: string[]
-  us_newCam30Iot: number[]
-  event: number
-  allActiveCam: number
-  sg_newCam30Iot: number[]
-  factoryEquipmentNum_Month: number[]
-  factoryEquipmentNum_Week: number[]
-  activeCamRegion: ActiveCamRegion[]
-  activeCity: number
-  aliveVideo: number[]
-  newCam: number
-  allActiveCamRegion: AllActiveCamRegion[]
-  factoryEquipmentNumRank: Array<FactoryEquipmentNumRank[]>
-  cloudCam: number
-  cloudSave: number
-  cloudSaveToday: string
-  factoryDate_Week: string[]
-  newCam30Iot: number[]
-  factoryEquipmentNumRank_week: Array<FactoryEquipmentNumRank[]>
-  factoryEquipmentNumRank_month: Array<FactoryEquipmentNumRank[]>
+  code: number
+  message: string
+  data: IOTData
 }
 
-export interface ActiveCamRegion {
-  onlineNum: number
-  onlineRegion: string
+export interface IOTData {
+  onlineEquipment: Record<string, number>
+  todayReport: TodayReport
+  factoryReports: FactoryReport[]
+  todayProduct: Record<string, number>
+  totalProduct: Record<string, number>
+  totalActivate: Record<string, number>
+  monthProduct: { [key: string]: MonthProduct }
+  monthActivate: null
+  activateCountry: number
+  activateProvince: number
 }
 
-export interface AllActiveCamRegion {
-  totalRegion: string
-  totalNum: number
+export interface FactoryReport {
+  factoryName: string
+  totalActivate: null
+  todayActivate: number
+  todayOnline: number
+  totalProduct: number
+  todayProduct: null
 }
 
-export interface CloudCamRegion {
-  region: string
-  cloudNum: number
+export interface MonthProduct {
+  total: number
+  region: Region[]
 }
 
-export interface CountryTop {
-  country: string
-  onlineDevice: number
+export interface Region {
+  name: string
+  product: number
 }
 
-export interface FactoryDataList {
-  totalActivity: number
-  name: null | string
-  totalFactory: number
-  todayFactory: number
-  todayActive: number
-  todayActivity: number
+export interface OnlineEquipment {
+  美国: number
+  泰国: number
+  中国: number
 }
 
-export interface FactoryEquipmentNumRank {
-  factoryNum: number
-  factoryName: null | string
+export interface TodayProduct {
+  东南亚: number
+  欧洲: number
+  中国: number
+  北美: number
 }
 
-export interface NewCamRegion {
-  todayRegion: string
-  todayNum: number
+export interface TodayReport {
+  'US_EU': CN
+  'CN': CN
+  'SG': CN
+}
+
+export interface CN {
+  orderIncome: number
+  adIncome: number
+  activeUser: number
+  activateEquipment: number
+  orderCount: number
+  adECPM: number
+  activeEquipment: number
+}
+
+export interface Sg {
+  orderIncome: number
+  activeUser: number
+  activateEquipment: number
+  orderCount: number
+  activeEquipment: number
 }

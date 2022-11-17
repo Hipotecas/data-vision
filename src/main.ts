@@ -2,7 +2,6 @@ import { setupLayouts } from 'virtual:generated-layouts'
 import Previewer from 'virtual:vue-component-preview'
 import 'virtual:windi.css'
 import { ViteSSG } from 'vite-ssg'
-import Echarts from 'vue-echarts'
 import generatedRoutes from '~pages'
 import App from './App.vue'
 import './styles/main.css'
@@ -19,6 +18,5 @@ export const createApp = ViteSSG(
     Object.values(import.meta.glob<{ install: UserModule }>('./modules/*.ts', { eager: true }))
       .forEach(i => i.install?.(ctx))
     ctx.app.use(Previewer)
-    ctx.app.component('v-chart', Echarts)
   },
 )

@@ -1,35 +1,17 @@
+import type { IOTData } from '~/api/types';
+
 export const defaultLine = {
-  countryTop: [],
-  factoryDate_Month: [],
-  cloudCamRegion: [],
-  eu_newCam30Iot: [],
-  cn_newCam30Iot: [],
-  factoryEquipmentNum: [],
-  activeCam: 0,
-  newCamRegion: [],
-  activeCountry: 0,
-  factoryData: [],
-  factoryDate: [],
-  us_newCam30Iot: [],
-  event: 0,
-  allActiveCam: 0,
-  sg_newCam30Iot: [],
-  factoryEquipmentNum_Month: [],
-  factoryEquipmentNum_Week: [],
-  activeCamRegion: [],
-  activeCity: 0,
-  aliveVideo: [],
-  newCam: 0,
-  allActiveCamRegion: [],
-  factoryEquipmentNumRank: [[]],
-  cloudCam: 0,
-  cloudSave: 0,
-  cloudSaveToday: '',
-  factoryDate_Week: [],
-  newCam30Iot: [],
-  factoryEquipmentNumRank_week: [[]],
-  factoryEquipmentNumRank_month: [[]],
-}
+  onlineEquipment: {},
+  todayReport: {},
+  factoryReports: [],
+  todayProduct: {},
+  totalProduct: {},
+  totalActivate: {},
+  monthProduct: { },
+  monthActivate: null,
+  activateCountry: 0,
+  activateProvince: 0,
+} as unknown as IOTData
 
 export const defaultYiLine = {
   sg_newCam30: [],
@@ -56,9 +38,10 @@ export const defaultYiLine = {
   cloudSaveToday: '',
   cn_newCam30Kami: [],
   newCam30: [],
+  allActiveCamRegion: [],
 }
 
-export const getLineOption = (legend: string[], axis: any[], series: any[]) => {
+export const getLineOption = (legend: any[], axis: any[], series: any[]) => {
   return {
     title: {
       text: '',
@@ -69,7 +52,7 @@ export const getLineOption = (legend: string[], axis: any[], series: any[]) => {
     grid: {
       left: '3%',
       right: '4%',
-      bottom: '5%',
+      bottom: '8%',
       containLabel: true,
     },
     legend: {
@@ -79,7 +62,6 @@ export const getLineOption = (legend: string[], axis: any[], series: any[]) => {
         color: 'white',
       },
     },
-    toolbox: false,
     xAxis: {
       type: 'category',
       boundarygap: false,

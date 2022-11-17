@@ -47,7 +47,6 @@ export const getLine = (title: string | undefined, xAxisData: any[], seriesData:
           type: 'line',
           color: '#f00',
         },
-        // data : this.sevenDayDataToX,
         data: xAxisData,
       },
     ],
@@ -71,17 +70,10 @@ export const getLine = (title: string | undefined, xAxisData: any[], seriesData:
       {
         name: title,
         type: 'line',
+        stack: 'Total',
         smooth: true,
-        stack: 'Kami总量',
-        dataTypeString: 1,
-        label: {
-          show: false,
-          position: 'top',
-        },
-        // showSymbol:false,
         lineStyle: {
-          color: 'rgba(64, 98, 235,0.8)',
-          width: '0',
+          width: 0,
         },
         areaStyle: {
           color: new graphic.LinearGradient(0, 0, 0, 1, [
@@ -94,6 +86,9 @@ export const getLine = (title: string | undefined, xAxisData: any[], seriesData:
               color: 'rgba(255, 255, 255,0)',
             },
           ]),
+        },
+        emphasis: {
+          focus: 'series',
         },
         data: seriesData,
       },

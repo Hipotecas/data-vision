@@ -1,11 +1,10 @@
-import type { Types } from './types'
-import type { YiTypes } from './yi-types'
 import http from '.'
+import type { Types } from './types'
 
-export function fetchIot(): Promise<Types> {
-  return http.get('/bigscreen/getdata/iot')
+export function fetchYi(): Promise<Types> {
+  return http.get('/bi/yihome')
 }
 
-export function fetchYi(): Promise<YiTypes> {
-  return http.get('/bigscreen/getdata/yihome')
+export function queryIot(): Promise<Types> {
+  return http.get('/bi/iot')
 }

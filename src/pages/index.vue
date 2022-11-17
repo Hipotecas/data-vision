@@ -1,19 +1,31 @@
 <script setup lang="ts">
-import { fetchIot } from '~/api/iot';
-import type { Types } from '~/api/types';
+import { queryIot } from '~/api/iot';
+import type { IOTData } from '~/api/types';
+
 import { getLine } from '~/utils';
 import { defaultLine } from '~/utils/line';
-let data = $ref<Types>(defaultLine)
+
+const { resume, pause } = useIntervalFn(load, 60000)
+let data = $ref<IOTData>(defaultLine)
 
 onMounted(() => {
-  fetchIot().then((res) => {
-    data = res
-  })
+  load()
+  resume()
 })
-
+onUnmounted(() => {
+  pause()
+})
+function load() {
+  queryIot().then((res) => {
+    data = res.data
+  })
+}
 const line1 = computed(() => getLine('激活量', data.factoryDate, data.factoryEquipmentNum))
 const line2 = computed(() => getLine('激活量', data.factoryDate_Week, data.factoryEquipmentNum_Week))
 const line3 = computed(() => getLine('激活量', data.factoryDate_Month, data.factoryEquipmentNum_Month))
+const getTotal = (val: Record<string, number> = {}) => {
+  return `${Object.values(val).reduce((prev, next) => prev + next, 0)}`
+}
 </script>
 
 <template>
@@ -24,94 +36,89 @@ const line3 = computed(() => getLine('激活量', data.factoryDate_Month, data.f
         <DropdownMenu />
       </div>
     </div>
+
     <section class="flex h-1/2 mr-4 mb-4s">
       <div class="flex flex-col px-4 w-80">
-        <OnlineAmout title="全球设备在线数量(Top 20)" :list="data.countryTop" />
+        <OnlineAmout title="全球设备在线数量(Top 20)" :list="data.onlineEquipment" />
         <div>
           <span class="text-base h-10 leading-10">激活量实时分布图</span>
-          <OnlineMap class="flex-1" :active-city="data.activeCity" :active-country="data.activeCountry" />
+          <OnlineMap class="flex-1" :active-city="data.activateCountry" :active-country="data.activateProvince" />
         </div>
       </div>
-      <div class="flex flex-col mx-4 flex-1">
-        <Daily />
+      <div class="flex flex-col mx-4 w-90">
+        <Daily :data="data.todayReport" />
       </div>
       <div class="flex flex-col mx-4 flex-1">
-        <Factory :factory-data="data.factoryData" />
+        <Factory :factory-data="data.factoryReports" />
       </div>
       <div class="flex-grow flex-1">
         <div>
           <div class="h-10 leading-10">
-            总激活量(台)
+            当日烧录量(台)
           </div>
-          <el-popover placement="left" trigger="click">
+          <el-popover placement="left" trigger="hover">
             <template #reference>
-              <Numbers :key="1" :num="data.allActiveCam.toString()" :max="8" />
+              <Numbers :num="getTotal(data.todayProduct)" :max="8" />
             </template>
             <div class="w-30">
-              <div v-for="(item, index) in data.allActiveCamRegion" :key="index" class="flex items-center justify-between">
-                <span>{{ item.totalRegion }}</span>
-                <span>{{ item.totalNum }}</span>
+              <div v-for="(item, index) in data.todayProduct" :key="index" class="flex items-center justify-between">
+                <span>{{ index }}</span>
+                <span>{{ item }}</span>
               </div>
             </div>
           </el-popover>
         </div>
         <div class="my-5">
           <div class="h-10 leading-10">
-            设备当前在线数(台)
+            累计生产量(台)
           </div>
-          <el-popover placement="left" trigger="click">
+          <el-popover placement="left" trigger="hover">
             <template #reference>
-              <Numbers :key="2" :num="data.activeCam.toString()" :max="8" />
+              <Numbers :num="getTotal(data.totalProduct)" :max="8" />
             </template>
             <div class="w-30">
-              <div v-for="(item, index) in data.activeCamRegion" :key="index" class="flex items-center justify-between">
-                <span>{{ item.onlineRegion }}</span>
-                <span>{{ item.onlineNum }}</span>
+              <div v-for="(item, index) in data.totalProduct" :key="index" class="flex items-center justify-between">
+                <span>{{ index }}</span>
+                <span>{{ item }}</span>
               </div>
             </div>
           </el-popover>
         </div>
         <div>
           <div class="h-10 leading-10">
-            今日激活量(台)
+            累计激活量(台)
           </div>
-          <el-popover placement="left" trigger="click">
+          <el-popover placement="left" trigger="hover">
             <template #reference>
-              <Numbers :key="data.newCam" :num="data.newCam.toString()" :max="8" />
+              <Numbers :num="getTotal(data.totalActivate)" :max="8" />
             </template>
             <div class="w-30">
-              <div v-for="(item, index) in data.newCamRegion" :key="index" class="flex items-center justify-between">
-                <span>{{ item.todayRegion }}</span>
-                <span>{{ item.todayNum }}</span>
+              <div v-for="(item, index) in data.totalActivate" :key="index" class="flex items-center justify-between">
+                <span>{{ index }}</span>
+                <span>{{ item }}</span>
               </div>
             </div>
           </el-popover>
         </div>
       </div>
     </section>
-    <div class="h-1/3 grid grid-cols-[1fr,300px,1fr,1fr]">
+    <div v-if="false" class="h-1/3 grid grid-cols-[1fr,300px,1fr,1fr]">
       <div class="  items-center mr-4">
         <div class="p-4">
           <div>近一个月工厂生产设备数(台/号)</div>
-          <e-charts :chart-option="line1" />
-        </div>
-      </div>
-      <div class=" items-center mr-4">
-        <div class="p-4">
-          <div>近七天激活量趋势(台/号)</div>
-          <e-charts :chart-option="line1" />
+          <e-charts :option="line1" />
         </div>
       </div>
       <div class=" items-center mr-4">
         <div class="p-4">
           <div>近一个月激活量趋势(台/号)</div>
-          <e-charts :chart-option="line2" />
+          <e-charts :option="line2" />
         </div>
       </div>
       <div class=" items-center">
         <div class="p-4">
           <div>一年以上激活量趋势(台)</div>
-          <e-charts :chart-option="line3" />
+          <e-charts :option="line3" />
         </div>
       </div>
     </div>

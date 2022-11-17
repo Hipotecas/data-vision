@@ -7,7 +7,6 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    Chart: typeof import('./components/Chart.vue')['default']
     Counter: typeof import('./components/Counter.vue')['default']
     Daily: typeof import('./components/Daily.vue')['default']
     DashboardList: typeof import('./components/DashboardList.vue')['default']
@@ -17,14 +16,11 @@ declare module '@vue/runtime-core' {
     ElDropdown: typeof import('element-plus/es')['ElDropdown']
     ElDropdownItem: typeof import('element-plus/es')['ElDropdownItem']
     ElDropdownMenu: typeof import('element-plus/es')['ElDropdownMenu']
-    ElIcon: typeof import('element-plus/es')['ElIcon']
     ElPopover: typeof import('element-plus/es')['ElPopover']
     Factory: typeof import('./components/Factory.vue')['default']
     Footer: typeof import('./components/Footer.vue')['default']
     LineChart: typeof import('./components/LineChart.vue')['default']
     LineFilter: typeof import('./components/LineFilter.vue')['default']
-    LineMap: typeof import('./components/LineMap.vue')['default']
-    NumberGroup: typeof import('./components/NumberGroup.vue')['default']
     Numbers: typeof import('./components/Numbers.vue')['default']
     OnlineAmout: typeof import('./components/OnlineAmout.vue')['default']
     OnlineMap: typeof import('./components/OnlineMap.vue')['default']
