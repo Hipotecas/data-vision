@@ -7,8 +7,16 @@ export const defaultLine = {
   todayProduct: {},
   totalProduct: {},
   totalActivate: {},
-  monthProduct: { },
-  monthActivate: null,
+  monthProduct: {
+    active: [],
+    date: [],
+    extras: [],
+  },
+  monthActivate: {
+    active: [],
+    date: [],
+    extras: [],
+  },
   activateCountry: 0,
   activateProvince: 0,
 } as unknown as IOTData

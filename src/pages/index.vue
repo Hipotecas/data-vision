@@ -20,7 +20,7 @@ function load() {
     data = res.data
   })
 }
-const line1 = computed(() => getLine('激活量', data.factoryDate, data.factoryEquipmentNum))
+const line1 = computed(() => getLine('激活量', data.monthActivate.date, data.monthActivate.active, data.monthActivate.extras))
 const line2 = computed(() => getLine('激活量', data.factoryDate_Week, data.factoryEquipmentNum_Week))
 const line3 = computed(() => getLine('激活量', data.factoryDate_Month, data.factoryEquipmentNum_Month))
 const getTotal = (val: Record<string, number> = {}) => {
@@ -102,7 +102,7 @@ const getTotal = (val: Record<string, number> = {}) => {
         </div>
       </div>
     </section>
-    <div v-if="false" class="h-1/3 grid grid-cols-[1fr,300px,1fr,1fr]">
+    <div class="h-1/3 grid grid-cols-[1fr,300px,1fr,1fr]">
       <div class="  items-center mr-4">
         <div class="p-4">
           <div>近一个月工厂生产设备数(台/号)</div>
@@ -112,13 +112,13 @@ const getTotal = (val: Record<string, number> = {}) => {
       <div class=" items-center mr-4">
         <div class="p-4">
           <div>近一个月激活量趋势(台/号)</div>
-          <e-charts :option="line2" />
+          <e-charts v-if="false" :option="line2" />
         </div>
       </div>
       <div class=" items-center">
         <div class="p-4">
           <div>一年以上激活量趋势(台)</div>
-          <e-charts :option="line3" />
+          <e-charts v-if="false" :option="line3" />
         </div>
       </div>
     </div>

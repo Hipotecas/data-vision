@@ -11,8 +11,8 @@ export interface IOTData {
   todayProduct: Record<string, number>
   totalProduct: Record<string, number>
   totalActivate: Record<string, number>
-  monthProduct: { [key: string]: MonthProduct }
-  monthActivate: null
+  monthProduct: MonthProduct
+  monthActivate: MonthProduct
   activateCountry: number
   activateProvince: number
 }
@@ -25,10 +25,11 @@ export interface FactoryReport {
   totalProduct: number
   todayProduct: null
 }
-
+export type Tooltip = Record<string, number>
 export interface MonthProduct {
-  total: number
-  region: Region[]
+  active: number[]
+  date: string[]
+  extras: Tooltip[]
 }
 
 export interface Region {

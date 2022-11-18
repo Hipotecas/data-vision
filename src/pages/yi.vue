@@ -22,7 +22,8 @@ function load() {
 const getTotal = (val: Record<string, number> = {}) => {
   return `${Object.values(val).reduce((prev, next) => prev + next, 0)}`
 }
-const line1 = computed(() => getLine('激活量', data.factoryDate, data.factoryEquipmentNum))
+
+const line1 = computed(() => getLine('激活量', data.value.monthActivate.date, data.value.monthActivate.active, data.value.monthActivate.extras))
 const line2 = computed(() => getLine('激活量', data.factoryDate_Week, data.factoryEquipmentNum_Week))
 const line3 = computed(() => getLine('激活量', data.factoryDate_Month, data.factoryEquipmentNum_Month))
 </script>
