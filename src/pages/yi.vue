@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { fetchYi } from '~/api/iot';
-import type { IOTData } from '~/api/types';
+import type { Data } from '~/api/types';
 
 import { getLine } from '~/utils';
 import { defaultLine } from '~/utils/line';
 
-const data = ref<IOTData>(defaultLine)
+let data = $ref<Data>(defaultLine)
 const { resume, pause } = useIntervalFn(load, 60000)
 onMounted(() => {
   load()
@@ -16,16 +16,13 @@ onUnmounted(() => {
 })
 function load() {
   fetchYi().then((res) => {
-    data.value = res.data
+    data = res.data
   })
 }
-const getTotal = (val: Record<string, number> = {}) => {
-  return `${Object.values(val).reduce((prev, next) => prev + next, 0)}`
-}
 
-const line1 = computed(() => getLine('激活量', data.value.monthActivate.date, data.value.monthActivate.active, data.value.monthActivate.extras))
-const line2 = computed(() => getLine('激活量', data.factoryDate_Week, data.factoryEquipmentNum_Week))
-const line3 = computed(() => getLine('激活量', data.factoryDate_Month, data.factoryEquipmentNum_Month))
+const line1 = computed(() => getLine('激活量', data.monthActivate.date, data.monthActivate.data, data.monthActivate.extras))
+const line2 = computed(() => getLine('激活量', data.monthProduct.date, data.monthProduct.data, data.monthProduct.extras))
+const line3 = computed(() => getLine('激活量', data.yearActivate.date, data.yearActivate.data, data.yearActivate.extras))
 </script>
 
 <template>
@@ -54,69 +51,39 @@ const line3 = computed(() => getLine('激活量', data.factoryDate_Month, data.f
           <div class="h-10 leading-10">
             当日烧录量(台)
           </div>
-          <el-popover placement="left" trigger="hover">
-            <template #reference>
-              <Numbers :num="getTotal(data.todayProduct)" :max="8" />
-            </template>
-            <div class="w-30">
-              <div v-for="(item, index) in data.todayProduct" :key="index" class="flex items-center justify-between">
-                <span>{{ index }}</span>
-                <span>{{ item }}</span>
-              </div>
-            </div>
-          </el-popover>
+          <Numbers :num="(data.todayProduct || 0).toString()" :max="8" />
         </div>
         <div class="my-5">
           <div class="h-10 leading-10">
             累计生产量(台)
           </div>
-          <el-popover placement="left" trigger="hover">
-            <template #reference>
-              <Numbers :num="getTotal(data.totalProduct)" :max="8" />
-            </template>
-            <div class="w-30">
-              <div v-for="(item, index) in data.totalProduct" :key="index" class="flex items-center justify-between">
-                <span>{{ index }}</span>
-                <span>{{ item }}</span>
-              </div>
-            </div>
-          </el-popover>
+          <Numbers :num="(data.totalProduct || 0).toString()" :max="8" />
         </div>
         <div>
           <div class="h-10 leading-10">
             累计激活量(台)
           </div>
-          <el-popover placement="left" trigger="hover">
-            <template #reference>
-              <Numbers :num="getTotal(data.totalActivate)" :max="8" />
-            </template>
-            <div class="w-30">
-              <div v-for="(item, index) in data.totalActivate" :key="index" class="flex items-center justify-between">
-                <span>{{ index }}</span>
-                <span>{{ item }}</span>
-              </div>
-            </div>
-          </el-popover>
+          <Numbers :num="(data.totalActivate || 0).toString()" :max="8" />
         </div>
       </div>
     </section>
-    <div class="hidden h-1/3 grid grid-cols-[1fr,300px,1fr,1fr]">
-      <div class="  items-center mr-4">
+    <div class=" h-1/3 grid grid-cols-3">
+      <div class=" items-center mr-4">
         <div class="p-4">
           <div>近一个月工厂生产设备数(台/号)</div>
-          <e-charts :option="line1" />
+          <e-charts :option="line1" height="200px" />
         </div>
       </div>
       <div class=" items-center mr-4">
         <div class="p-4">
           <div>近一个月激活量趋势(台/号)</div>
-          <e-charts :option="line2" />
+          <e-charts :option="line2" height="200px" />
         </div>
       </div>
       <div class=" items-center">
         <div class="p-4">
           <div>一年以上激活量趋势(台)</div>
-          <e-charts :option="line3" />
+          <e-charts :option="line3" height="200px" />
         </div>
       </div>
     </div>

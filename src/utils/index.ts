@@ -14,15 +14,17 @@ export const getLine = (title: string | undefined, xAxisData: any[], seriesData:
         },
       },
       formatter(data: any) {
-        const item = data[0]
-        const index = Math.min(item.dataIndex, list.length - 1)
-        const current = list[index]
+        if (list && list.length) {
+          const item = data[0]
+          const index = Math.min(item.dataIndex, list.length - 1)
+          const current = list[index]
 
-        let str = ''
-        for (const [key, value] of (current))
-          str += `<div>${key}: ${value}</div>`
+          let str = ''
+          for (const [key, value] of (current))
+            str += `<div>${key}: ${value}</div>`
 
-        return `${item.seriesName}</br>总生产数量: ${item.value} </br> ${str}`
+          return `${item.seriesName}</br>总生产数量: ${item.value} </br> ${str}`
+        }
       },
     },
     grid: {

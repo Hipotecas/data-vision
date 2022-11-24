@@ -17,6 +17,8 @@ declare module '@vue/runtime-core' {
     ElDropdownItem: typeof import('element-plus/es')['ElDropdownItem']
     ElDropdownMenu: typeof import('element-plus/es')['ElDropdownMenu']
     ElPopover: typeof import('element-plus/es')['ElPopover']
+    ElTable: typeof import('element-plus/es')['ElTable']
+    ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     Factory: typeof import('./components/Factory.vue')['default']
     Footer: typeof import('./components/Footer.vue')['default']
     LineChart: typeof import('./components/LineChart.vue')['default']

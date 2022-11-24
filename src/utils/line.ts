@@ -1,4 +1,4 @@
-import type { IOTData } from '~/api/types';
+import type { Data } from '~/api/types';
 
 export const defaultLine = {
   onlineEquipment: {},
@@ -19,7 +19,12 @@ export const defaultLine = {
   },
   activateCountry: 0,
   activateProvince: 0,
-} as unknown as IOTData
+  yearActivate: {
+    active: [],
+    date: [],
+    extras: [],
+  },
+} as unknown as Data
 
 export const defaultYiLine = {
   sg_newCam30: [],

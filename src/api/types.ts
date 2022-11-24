@@ -1,75 +1,66 @@
 export interface Types {
   code: number
   message: string
-  data: IOTData
+  data: Data
 }
 
-export interface IOTData {
-  onlineEquipment: Record<string, number>
+export interface Data {
+  onlineEquipment: OnlineEquipment[]
   todayReport: TodayReport
   factoryReports: FactoryReport[]
-  todayProduct: Record<string, number>
-  totalProduct: Record<string, number>
-  totalActivate: Record<string, number>
-  monthProduct: MonthProduct
-  monthActivate: MonthProduct
+  todayProduct: number
+  totalProduct: number
+  totalActivate: number
+  monthProduct: MonthActivate
+  monthActivate: MonthActivate
+  yearActivate: MonthActivate
   activateCountry: number
   activateProvince: number
 }
 
 export interface FactoryReport {
   factoryName: string
-  totalActivate: null
+  totalActivate: number
   todayActivate: number
-  todayOnline: number
+  lastSevenDayActivate: number
+  lastThirtyDayActivate: number
+  online: number
   totalProduct: number
-  todayProduct: null
-}
-export type Tooltip = Record<string, number>
-export interface MonthProduct {
-  active: number[]
-  date: string[]
-  extras: Tooltip[]
+  todayProduct: number
+  lastSevenDayProduct: number
+  lastThirtyProduct: number
 }
 
-export interface Region {
-  name: string
-  product: number
+export interface MonthActivate {
+  date: string[]
+  data: number[]
+  extras: any[]
 }
 
 export interface OnlineEquipment {
-  美国: number
-  泰国: number
-  中国: number
-}
-
-export interface TodayProduct {
-  东南亚: number
-  欧洲: number
-  中国: number
-  北美: number
+  country: string
+  cnt: number
 }
 
 export interface TodayReport {
-  'US_EU': CN
-  'CN': CN
-  'SG': CN
+  cn: CN
+  us: CN
+  sg: CN
 }
 
 export interface CN {
+  activeEquipment: number
+  activeUser: number
+  activateEquipment: number
+  orderCount: number
   orderIncome: number
   adIncome: number
-  activeUser: number
-  activateEquipment: number
-  orderCount: number
   adECPM: number
-  activeEquipment: number
 }
 
-export interface Sg {
-  orderIncome: number
-  activeUser: number
-  activateEquipment: number
-  orderCount: number
-  activeEquipment: number
+export interface TotalActivate {
+  EU: number
+  SG: number
+  CN: number
+  US: number
 }

@@ -3,14 +3,14 @@ import type { TodayReport } from '~/api/types';
 
 const props = withDefaults(defineProps<{ data: TodayReport }>(), {
   data: () => ({
-    CN: {},
-    US_EU: {},
-    SG: {},
+    cn: {},
+    us: {},
+    sg: {},
   } as TodayReport),
 })
 type K = keyof TodayReport
-const active = ref<K>('CN')
-const tabs = [{ label: '中国', value: 'CN' }, { label: '欧美', value: 'US_EU' }, { label: '东南亚', value: 'SG' }] as { label: string; value: K }[]
+const active = ref<K>('cn')
+const tabs = [{ label: '中国', value: 'cn' }, { label: '欧美', value: 'us' }, { label: '东南亚', value: 'sg' }] as { label: string; value: K }[]
 
 const current = computed(() => props.data[active.value] || {})
 

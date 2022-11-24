@@ -1,3 +1,4 @@
+import 'element-plus/theme-chalk/dark/css-vars.css'
 import { setupLayouts } from 'virtual:generated-layouts'
 import Previewer from 'virtual:vue-component-preview'
 import 'virtual:windi.css'
@@ -6,7 +7,6 @@ import generatedRoutes from '~pages'
 import App from './App.vue'
 import './styles/main.css'
 import type { UserModule } from './types'
-
 const routes = setupLayouts(generatedRoutes)
 
 // https://github.com/antfu/vite-ssg
