@@ -4,28 +4,29 @@ import {
   GridComponent,
   LegendComponent,
   TitleComponent,
-  ToolboxComponent,
   TooltipComponent,
 } from 'echarts/components';
 import { use } from 'echarts/core';
-import { CanvasRenderer } from 'echarts/renderers';
+import { SVGRenderer } from 'echarts/renderers';
 import { defineComponent } from 'vue';
-import VChart from 'vue-echarts';
+import VChart, { THEME_KEY } from 'vue-echarts';
 
 use([
-  CanvasRenderer,
+  SVGRenderer,
   LineChart,
   TitleComponent,
   TooltipComponent,
   LegendComponent,
   GridComponent,
-  ToolboxComponent,
 ]);
 
 export default defineComponent({
   name: 'VEcharts',
   components: {
     VChart,
+  },
+  provide: {
+    [THEME_KEY]: 'dark',
   },
   props: {
     option: Object,
@@ -35,5 +36,5 @@ export default defineComponent({
 </script>
 
 <template>
-  <VChart :style="{ height: height || '160px' }" :option="option" autoresize />
+  <VChart :style="{ height: height || '160px' }" renderer="svg" :option="option" autoresize />
 </template>

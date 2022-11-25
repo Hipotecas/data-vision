@@ -34,33 +34,33 @@ function handleClick(item: any) {
     <div class="p-5 bg">
       <div class="text-base text-night flex justify-between h-10 leading-10 items-center">
         <span class="flex-1">当日设备活跃数(台)</span>
-        <span class="text-xl text-white">{{ current.activeEquipment }}</span>
+        <span class="text-xl text-white">{{ $filters.number(current.activeEquipment) }}</span>
       </div>
       <div class="text-base text-night flex justify-between h-10 leading-10 items-center">
         <span class="flex-1">当日用户活跃(DAU)</span>
-        <span class="text-xl text-white">{{ current.activeUser }}</span>
+        <span class="text-xl text-white">{{ $filters.number(current.activeUser) }}</span>
       </div>
       <div class="text-base text-night flex justify-between h-10 leading-10 items-center">
         <span class="flex-1">当日激活量(台)</span>
-        <span class="text-xl text-white">{{ current.activateEquipment }}</span>
+        <span class="text-xl text-white">{{ $filters.number(current.activateEquipment) }}</span>
       </div>
     </div>
     <div class="mt-5  p-5 bg">
       <div class="text-base text-night flex justify-between h-10 leading-10 items-center">
         <span class="flex-1">当日订单量</span>
-        <span class="text-xl text-white">{{ current.orderCount }}</span>
+        <span class="text-xl text-white">{{ $filters.number(current.orderCount) }}</span>
       </div>
       <div class="text-base text-night flex justify-between h-10 leading-10 items-center">
         <span class="flex-1">当日总收入(元)</span>
-        <span class="text-xl text-white">{{ current.orderIncome }}</span>
+        <span class="text-xl text-white">{{ $filters.number(current.orderIncome) }}</span>
       </div>
       <div class="text-base text-night flex justify-between h-10 leading-10 items-center">
         <span class="flex-1">广告收入(元)</span>
-        <span class="text-xl text-white">{{ current.adIncome }}</span>
+        <span class="text-xl text-white">{{ $filters.number(current.adIncome) }}</span>
       </div>
       <div class="text-base text-night flex justify-between h-10 leading-10 items-center">
         <span class="flex-1">广告ECPM(元)</span>
-        <span class="text-xl text-white">{{ current.adECPM }}</span>
+        <span class="text-xl text-white">{{ $filters.number(current.adECPM) }}</span>
       </div>
     </div>
   </div>

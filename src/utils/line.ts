@@ -1,59 +1,54 @@
-import type { Data } from '~/api/types';
+import type { DashboardData } from '~/api/monitor';
+import type { CN, Data } from '~/api/types';
 
-export const defaultLine = {
-  onlineEquipment: {},
-  todayReport: {},
+export const defaultLine: Data = {
+  onlineEquipment: [],
+  todayReport: { cn: {} as CN, sg: {} as CN, us: {} as CN },
   factoryReports: [],
-  todayProduct: {},
-  totalProduct: {},
-  totalActivate: {},
+  todayProduct: 0,
+  totalProduct: 0,
+  totalActivate: 0,
   monthProduct: {
-    active: [],
+    data: [],
     date: [],
     extras: [],
   },
   monthActivate: {
-    active: [],
+    data: [],
     date: [],
     extras: [],
   },
   activateCountry: 0,
   activateProvince: 0,
   yearActivate: {
-    active: [],
+    data: [],
     date: [],
     extras: [],
   },
-} as unknown as Data
-
-export const defaultYiLine = {
-  sg_newCam30: [],
-  cloudCamRegion: [],
-  eu_newCam30: [],
-  cn_newCam30: [],
-  activeCam: 0,
-  newCamRegion: [],
-  event: 0,
-  newCam30Kami: [],
-  countryTop: [],
-  us_newCam30: [],
-  activeCountry: 0,
-  allActiveCam: 0,
-  us_newCam30Kami: [],
-  activeCamRegion: [],
-  activeCity: 0,
-  eu_newCam30Kami: [],
-  aliveVideo: [],
-  newCam: 0,
-  sg_newCam30Kami: [],
-  cloudCam: 0,
-  cloudSave: 0,
-  cloudSaveToday: '',
-  cn_newCam30Kami: [],
-  newCam30: [],
-  allActiveCamRegion: [],
 }
-
+export const defaultDashboard = {
+  renewalOrder: {
+    chargeOrder: {},
+    successIncome: {},
+    successOrder: {},
+    successRate: {},
+  },
+  createOnetime: {
+    chargeOrder: {},
+    successIncome: {},
+    successOrder: {},
+    successRate: {},
+  },
+  createRenewal: {
+    chargeOrder: {},
+    successIncome: {},
+    successOrder: {},
+    successRate: {},
+  },
+  adLoad: {},
+  adShow: {},
+  adClick: {},
+} as DashboardData
 export const getLineOption = (legend: any[], axis: any[], series: any[]) => {
   return {
     title: {

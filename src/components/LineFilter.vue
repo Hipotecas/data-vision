@@ -1,28 +1,42 @@
 <script setup lang="ts">
 import dayjs from 'dayjs';
+import { get } from 'lodash-es';
+import { getDashboard } from '~/api/iot';
 import { getLineOption } from '~/utils/line';
 
-defineProps<{
+const props = defineProps<{
   title?: string
-  type?: string
+  type: string
+  subscribe?: boolean
 }>()
 const state = reactive({
   current: new Date(),
   target: dayjs().subtract(1, 'day').toDate(),
 })
-const legend = $ref(['今日', '昨日'])
-const axis = $ref(['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'])
-const series = $ref([{ name: '今日', type: 'line', data: [120, 132, 101, 134, 90, 230, 210] }, { name: '昨日', type: 'line', data: [220, 182, 191, 234, 290, 330, 310] }])
-const line = getLineOption(legend, axis, series)
+let dash = $ref<{ date: string[]; data: { key: string; data: number[] }[] }>({ date: [], data: [] })
 
-onMounted(() => {})
+const legend = computed(() => get(dash, 'data', []).map(i => i.key))
+const axis = computed(() => get(dash, 'date', []))
+const series = computed(() => get(dash, 'data', []).map(item => ({ name: item.key, type: 'line', data: item.data })))
+const line = computed(() => getLineOption(legend.value, axis.value, series.value))
+function load(dateA: string, dateB: string, type: string, subscribe = false) {
+  getDashboard({ dateA, dateB, payType: type, subscribeType: Number(subscribe) }).then((res) => {
+    dash = res.data
+  })
+}
+
+function formatDate(date: Date) {
+  return dayjs(date).format('YYYY-MM-DD')
+}
+
+watchEffect(() => load(formatDate(state.target), formatDate(state.current), props.type, props.subscribe))
 </script>
 
 <template>
-  <div class="text-center text-base">
+  <div class="text-center text-base flex items-center justify-center h-10 leading-10 mb-8">
     <span>{{ title }}</span>
   </div>
-  <div class="px-5">
+  <div class="px-5 mb-5">
     <el-date-picker v-model="state.current" style="width: 200px;" />
     <el-date-picker v-model="state.target" style="width: 200px; margin-left: 10px;" />
   </div>

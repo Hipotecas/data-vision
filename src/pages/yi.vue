@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import { get } from 'lodash-es'
 import { fetchYi } from '~/api/iot';
-import type { Data } from '~/api/types';
+import type { Data, MonthActivate } from '~/api/types';
 
 import { getLine } from '~/utils';
 import { defaultLine } from '~/utils/line';
@@ -20,14 +21,17 @@ function load() {
   })
 }
 
-const line1 = computed(() => getLine('激活量', data.monthActivate.date, data.monthActivate.data, data.monthActivate.extras))
-const line2 = computed(() => getLine('激活量', data.monthProduct.date, data.monthProduct.data, data.monthProduct.extras))
-const line3 = computed(() => getLine('激活量', data.yearActivate.date, data.yearActivate.data, data.yearActivate.extras))
+const monthActivate = get(data, 'monthActivate', {} as MonthActivate)
+const monthProduct = get(data, 'monthProduct', {} as MonthActivate)
+const yearActivate = get(data, 'yearActivate', {} as MonthActivate)
+const line1 = computed(() => getLine('激活量', monthActivate.date, monthActivate.data, monthActivate.extras))
+const line2 = computed(() => getLine('激活量', monthProduct.date, monthProduct.data, monthProduct.extras))
+const line3 = computed(() => getLine('激活量', yearActivate.date, yearActivate.data, yearActivate.extras))
 </script>
 
 <template>
   <div class="h-full overflow-hidden bg-black flex text-light-500 flex-col">
-    <div class="text-3xl text-center grid  items-center h-1/6">
+    <div class="text-3xl text-center grid  items-center h-50">
       <span>YiHome Real-Time Dashboard</span>
       <div class="absolute right-4">
         <DropdownMenu />
@@ -35,7 +39,7 @@ const line3 = computed(() => getLine('激活量', data.yearActivate.date, data.y
     </div>
     <section class="flex h-1/2 mr-4 mb-4s">
       <div class="flex flex-col px-4 w-80">
-        <OnlineAmout title="全球设备在线数量(Top 20)" :list="data.onlineEquipment" />
+        <OnlineAmount title="全球设备在线数量(Top 20)" :list="data.onlineEquipment" />
       </div>
       <div class="flex flex-col mx-4 flex-1">
         <Daily :data="data.todayReport" />

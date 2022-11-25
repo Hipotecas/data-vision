@@ -1,6 +1,5 @@
-import { graphic } from 'echarts'
-
-export const getLine = (title: string | undefined, xAxisData: any[], seriesData: any[], list: any[]) => {
+import LinearGradient from 'zrender/src/graphic/LinearGradient'
+export const getLine = (title: string | undefined, xAxisData: any[] = [], seriesData: any[] = [], list: any[] = []) => {
   return {
     title: {
       text: '',
@@ -33,9 +32,6 @@ export const getLine = (title: string | undefined, xAxisData: any[], seriesData:
       right: '20px',
       bottom: '0%',
       containLabel: true,
-    },
-    toolbox: {
-      show: false,
     },
     xAxis: [
       {
@@ -89,7 +85,7 @@ export const getLine = (title: string | undefined, xAxisData: any[], seriesData:
           width: 0,
         },
         areaStyle: {
-          color: new graphic.LinearGradient(0, 0, 0, 1, [
+          color: new LinearGradient(0, 0, 0, 1, [
             {
               offset: 0,
               color: 'rgba(64, 98, 235,0.8)',

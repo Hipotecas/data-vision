@@ -33,9 +33,9 @@ function handleClick(item) {
 
 <template>
   <el-dropdown>
-    <span class="el-dropdown-link bg-white h-8 leading-8 px-4 rounded-sm">
+    <el-button class="min-w-25">
       {{ current }}
-    </span>
+    </el-button>
     <template #dropdown>
       <el-dropdown-menu>
         <el-dropdown-item v-for="item in links" :key="item.text" :disabled="disabled" @click="handleClick(item)">

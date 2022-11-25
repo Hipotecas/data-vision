@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import { get } from 'lodash-es';
 import { queryIot } from '~/api/iot';
-import type { Data } from '~/api/types';
+import type { Data, MonthActivate } from '~/api/types';
 import { getLine } from '~/utils';
 import { defaultLine } from '~/utils/line';
-
 const { resume, pause } = useIntervalFn(load, 60000)
 let data = $ref<Data>(defaultLine)
 
@@ -19,23 +19,26 @@ function load() {
     data = res.data
   })
 }
-const line1 = computed(() => getLine('激活量', data.monthActivate.date, data.monthActivate.data, data.monthActivate.extras))
-const line2 = computed(() => getLine('激活量', data.monthProduct.date, data.monthProduct.data, data.monthProduct.extras))
-const line3 = computed(() => getLine('激活量', data.yearActivate.date, data.yearActivate.data, data.yearActivate.extras))
+const monthActivate = get(data, 'monthActivate', {} as MonthActivate)
+const monthProduct = get(data, 'monthProduct', {} as MonthActivate)
+const yearActivate = get(data, 'yearActivate', {} as MonthActivate)
+const line1 = computed(() => getLine('激活量', monthActivate.date, monthActivate.data, monthActivate.extras))
+const line2 = computed(() => getLine('激活量', monthProduct.date, monthProduct.data, monthProduct.extras))
+const line3 = computed(() => getLine('激活量', yearActivate.date, yearActivate.data, yearActivate.extras))
 </script>
 
 <template>
-  <div class="h-full overflow-hidden bg-black flex text-light-500 flex-col">
-    <div class="text-3xl text-center grid  items-center h-1/6 relative">
+  <div class="h-full overflow-hidden  flex text-light-500 flex-col">
+    <div class="text-3xl text-center grid items-center h-50 relative">
       <span>IOT Real-Time Dashboard</span>
       <div class="absolute right-4">
         <DropdownMenu />
       </div>
     </div>
 
-    <section class="flex h-1/2 mr-4 mb-4s">
+    <section class="flex h-1/2 mr-4 mb-4" style="width:100vw">
       <div class="flex flex-col px-4 w-80">
-        <OnlineAmout title="全球设备在线数量(Top 20)" :list="data.onlineEquipment" />
+        <OnlineAmount title="全球设备在线数量(Top 20)" :list="data.onlineEquipment" />
         <div>
           <span class="text-base h-10 leading-10">激活量实时分布图</span>
           <OnlineMap class="flex-1" :active-city="data.activateCountry" :active-country="data.activateProvince" />
@@ -44,7 +47,7 @@ const line3 = computed(() => getLine('激活量', data.yearActivate.date, data.y
       <div class="flex flex-col mx-4 w-90">
         <Daily :data="data.todayReport" />
       </div>
-      <div class="flex flex-col mx-4 flex-1 flex-shrink">
+      <div class="flex flex-col mx-4 2xl:w-180 xl:w-120">
         <Factory :factory-data="data.factoryReports" />
       </div>
       <div class="flex-shrink flex-1">
